@@ -51,6 +51,13 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  assets:
+    - assets/images/book.png
+  fonts:
+    - family: Exo
+      fonts:
+        - asset: assets/fonts/Exo-Regular.ttf
+        - asset: assets/fonts/Exo-Bold.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -74,9 +81,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  #  - family: Exo
+  #    fonts:
+  #      - asset: assets/Exo.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
