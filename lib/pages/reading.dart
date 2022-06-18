@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-class Reading extends StatefullWidget{
-  const Reading ({super.kay});
+class Reading extends StatefulWidget{
+  const Reading ({super.key});
 
   @override
   State<Reading>  createState() => _ReadingState();
