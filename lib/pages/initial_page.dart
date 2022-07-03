@@ -1,3 +1,4 @@
+import 'package:butterfly_project/pages/widgets/main_button.dart';
 import 'package:flutter/material.dart';
 
 class InitialPage extends StatefulWidget {
@@ -8,9 +9,11 @@ class InitialPage extends StatefulWidget {
 }
 
 class _InitialPageState extends State<InitialPage> {
-
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Text("WingBook"),);
+    return Scaffold(
+      appBar: AppBar(),
+      body: const Center(child: MainButton(name: "Lendo", route: "/reading")),
+    );
   }
 }
