@@ -1,4 +1,5 @@
 import 'package:butterfly_project/pages/initial_page.dart';
+import 'package:butterfly_project/style/colors.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -9,9 +10,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
-  initState(){
+  initState() {
     super.initState();
     loading(context);
   }
@@ -20,39 +20,35 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-          child: Container(
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.bottomRight,
-                  end: Alignment.topLeft,
-                  colors: [
-                    Colors.deepPurple,
-                    Colors.purple,
-                  ],
-                )
-            ),
-            child: logo()
-          ),
-        )
-    );
+      child: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            begin: Alignment.bottomRight,
+            end: Alignment.topLeft,
+            colors: [primaryColor, secondaryColor],
+          )),
+          child: logo()),
+    ));
   }
 }
 
-
-void loading(context){
+void loading(context) {
   Future.delayed(const Duration(milliseconds: 2000)).then((value) {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const InitialPage()));
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const InitialPage()));
   });
 }
 
-logo(){
+logo() {
   Center image = Center(
-    child: Image.asset('assets/images/book.png', width: 150,)
-  );
+      child: Image.asset(
+    'assets/images/book.png',
+    width: 150,
+  ));
 
   Text texto = const Text(
-      'WingBook',
-      style: TextStyle(
+    'WingBook',
+    style: TextStyle(
       fontSize: 45.0,
       fontWeight: FontWeight.normal,
       color: Colors.white,
@@ -62,5 +58,6 @@ logo(){
 
   MainAxisAlignment alinhar = MainAxisAlignment.center;
 
-  return Center(child: Column(mainAxisAlignment: alinhar, children: [image, texto]));
+  return Center(
+      child: Column(mainAxisAlignment: alinhar, children: [image, texto]));
 }

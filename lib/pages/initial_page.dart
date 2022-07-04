@@ -13,27 +13,29 @@ class InitialPage extends StatefulWidget {
 class _InitialPageState extends State<InitialPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80),
-        child: GenericAppBar(
-          title: "WingBook",
-          leading: Icon(Icons.arrow_downward),
-          actions: [ Icon(Icons.star),],
-        ),
-      ),
-      body: GenericBody(items: [
-        SizedBox(height: 10),
-        MainButton(name: "Lendo", route: "/reading"),
-        SizedBox(height: 10),
-        MainButton(name: "Lendo", route: "/reading"),
-        SizedBox(height: 10),
-        MainButton(name: "Lendo", route: "/reading"),
-        SizedBox(height: 10),
-        MainButton(name: "Lendo", route: "/reading"),
-        SizedBox(height: 10),
-        MainButton(name: "Lendo", route: "/reading"),
-      ]),
-    );
+    return Scaffold(
+        appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(80),
+            child: GenericAppBar(
+              title: "WingBook",
+              leading: IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () {},
+              ),
+              actions: [
+                IconButton(
+                    onPressed: () => Navigator.pushNamed(context, '/favorites'),
+                    icon: const Icon(Icons.star_border_rounded))
+              ],
+            )),
+        body: const GenericBody(
+          items: [
+            MainButton(name: "Lista de leitura", route: "/read_list"),
+            MainButton(name: "Lendo", route: "/reading"),
+            MainButton(name: "Pausados", route: "/paused"),
+            MainButton(name: "Lidos", route: "/read"),
+            MainButton(name: "Todos", route: "/all")
+          ],
+        ));
   }
 }
