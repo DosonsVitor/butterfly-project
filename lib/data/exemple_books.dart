@@ -1,4 +1,6 @@
 import 'package:butterfly_project/domain/book.dart';
+import 'package:butterfly_project/domain/anotacao.dart';
+import 'package:butterfly_project/pages/book_details.dart';
 import 'package:butterfly_project/widget/book_card.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +15,10 @@ List<BookCard> readList = [
           Cor02: Colors.orange,
           Paginas: 230,
           PaginasLidas: 0,
-          Icon: Icons.business)),
+          Icon: Icons.business,
+          Frases: [Anotacao(anotacao: "Alelele", pagina: 5), Anotacao(anotacao: "Alelele", pagina: 5), Anotacao(anotacao: "Alelele", pagina: 5)]
+      ),
+  ),
   BookCard(
       book: Book(
           Nome: "Harry Potter e o prisioneiro de Azkaban",
