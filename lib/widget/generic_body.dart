@@ -23,16 +23,13 @@ class _GenericBodyState extends State<GenericBody> {
                 topLeft: Radius.circular(30), topRight: Radius.circular(30)),
             color: Colors.white),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-          child: CustomScrollView(
-            slivers: <Widget>[
-              SliverList(
-                  delegate: SliverChildBuilderDelegate((context, index) {
+            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+            child: ListView.builder(
+              itemCount: widget.items.length,
+              itemBuilder: (BuildContext context, int index) {
                 return widget.items[index];
-              }, childCount: widget.items.length))
-            ],
-          ),
-        ),
+              },
+            )),
       ),
     );
   }
