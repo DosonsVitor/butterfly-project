@@ -1,6 +1,7 @@
 import 'package:butterfly_project/data/exemple_books.dart';
 import 'package:flutter/material.dart';
 
+import '../data/example_books2.dart';
 import '../widget/generic_appbar.dart';
 import '../widget/generic_body.dart';
 
@@ -32,7 +33,7 @@ class _PausedState extends State<Paused> {
           ],
         ),
       ),
-      body: GenericBody(items: paused),
+      body: GenericBody(items: getBookForStatus(3)),
     );
   }
 }

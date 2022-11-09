@@ -4,6 +4,8 @@ import 'package:butterfly_project/widget/generic_appbar.dart';
 import 'package:butterfly_project/widget/generic_body.dart';
 import 'package:flutter/material.dart';
 
+import '../data/example_books2.dart';
+
 class ReadList extends StatefulWidget {
   const ReadList({super.key});
 
@@ -32,7 +34,7 @@ class _ReadListState extends State<ReadList> {
           ],
         ),
       ),
-      body: GenericBody(items: readList),
+      body: GenericBody(items: getBookForStatus(1)),
 
       floatingActionButton: AddBookButton()
     );

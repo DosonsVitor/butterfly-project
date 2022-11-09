@@ -11,7 +11,7 @@ class Book {
   final int Paginas;
   final int PaginasLidas;
   final IconData Icon;
-  final String Status;
+  final int Status;
   final List<Anotacao> Frases;
   final List<Anotacao> Anotacoes;
 
@@ -24,7 +24,7 @@ class Book {
     required this.Paginas,
     required this.PaginasLidas,
     required this.Icon,
-    this.Status = "lista_leitura",
+    this.Status = 1,
     this.Frases = const [],
     this.Anotacoes = const []
   });

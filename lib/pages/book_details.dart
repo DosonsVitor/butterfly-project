@@ -6,10 +6,30 @@ import '../domain/book.dart';
 
 var bookIcon = Icons.ac_unit_outlined;
 
+List<TextButton> allChangeStatusButton = [
+  TextButton(
+      onPressed: (){},
+      child: Text("Mudar para lista de leitura")
+  ),
+  TextButton(
+      onPressed: (){},
+      child: Text("Mudar para lendo")
+  ),
+  TextButton(
+      onPressed: (){},
+      child: Text("Mudar para pausado")
+  ),
+  TextButton(
+      onPressed: (){},
+      child: Text("Mudar para lido")
+  ),
+];
+
 class BookDetails extends StatefulWidget {
   final Book book;
+  List<TextButton> actualChangeStatusButtons = [];
 
-  const BookDetails({Key? key, required this.book}) : super(key: key);
+  BookDetails({Key? key, required this.book}) : super(key: key);
 
   @override
   State<BookDetails> createState() => _BookDetailsState();
@@ -31,6 +51,14 @@ class _BookDetailsState extends State<BookDetails> {
       frases(widget),
       anotacoes(widget)
     ];
+
+    widget.actualChangeStatusButtons = showChangeStatusButtons(widget.book.Status);
+    widget.actualChangeStatusButtons.add(
+        TextButton(
+            onPressed: (){},
+            child: Text("Deletar", style: TextStyle(color: Colors.redAccent),)
+        )
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -83,46 +111,59 @@ class _BookDetailsState extends State<BookDetails> {
 }
 
 informacoes(widget) {
-  return Column(
-    children: [
-      Container(
-          width: 500,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [widget.book.Cor01, widget.book.Cor02])),
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 20),
-                Text(
-                  widget.book.Nome,
-                  style: const TextStyle(
-                      fontSize: 25, color: Colors.white, fontFamily: 'Exo'),
-                ),
-                Text(
-                  widget.book.Autor,
-                  style:
-                      const TextStyle(color: Colors.white, fontFamily: 'Exo'),
-                ),
-              ],
-            ),
-          )),
-      const SizedBox(
-        height: 20,
-      ),
-      infoCard("Sinopse:", widget.book.Sinopse, widget.book.Cor01),
-      const SizedBox(height: 20),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          infoCard("Paginas:", widget.book.Paginas, widget.book.Cor01),
-          infoCard(
-              "Paginas lidas:", widget.book.PaginasLidas, widget.book.Cor01)
-        ],
-      )
-    ],
+  return SingleChildScrollView(
+    child: Column(
+      children: [
+        Container(
+            width: 500,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [widget.book.Cor01, widget.book.Cor02])),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
+                  Text(
+                    widget.book.Nome,
+                    style: const TextStyle(
+                        fontSize: 25, color: Colors.white, fontFamily: 'Exo'),
+                  ),
+                  Text(
+                    widget.book.Autor,
+                    style:
+                        const TextStyle(color: Colors.white, fontFamily: 'Exo'),
+                  ),
+                ],
+              ),
+            )),
+        const SizedBox(
+          height: 20,
+        ),
+        infoCard("Sinopse:", widget.book.Sinopse, widget.book.Cor01),
+        const SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            infoCard("Paginas:", widget.book.Paginas, widget.book.Cor01),
+            infoCard(
+                "Paginas lidas:", widget.book.PaginasLidas, widget.book.Cor01)
+          ],
+        ),
+
+        GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, childAspectRatio: 3),
+          shrinkWrap: true,
+          itemCount: 4,
+          itemBuilder: (BuildContext context, int index) {
+            return widget.actualChangeStatusButtons[index];
+          },
+        ),
+
+      ],
+    ),
   );
 }
 
@@ -221,4 +262,15 @@ noteCard(String anotacao, pagina, cor) {
                           color: cor, fontFamily: 'Exo', fontSize: 15))
                 ])),
       ));
+}
+
+showChangeStatusButtons (statusActual){
+  List<TextButton> showButtons = [];
+  for(int i = 0; i < 4; i++ ){
+    if(statusActual != i+1){
+      showButtons.add(allChangeStatusButton[i]);
+    }
+  }
+
+  return showButtons;
 }
