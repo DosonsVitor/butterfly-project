@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'anotacao.dart';
+
 class Book {
   final String Nome;
   final String Autor;
@@ -10,6 +12,8 @@ class Book {
   final int PaginasLidas;
   final IconData Icon;
   final String Status;
+  final List<Anotacao> Frases;
+  final List<Anotacao> Anotacoes;
 
   Book({
     required this.Nome,
@@ -21,5 +25,7 @@ class Book {
     required this.PaginasLidas,
     required this.Icon,
     this.Status = "lista_leitura",
+    this.Frases = const [],
+    this.Anotacoes = const []
   });
 }

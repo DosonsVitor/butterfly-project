@@ -1,19 +1,50 @@
 import 'package:butterfly_project/domain/book.dart';
+import 'package:butterfly_project/domain/anotacao.dart';
+import 'package:butterfly_project/pages/book_details.dart';
 import 'package:butterfly_project/widget/book_card.dart';
 import 'package:flutter/material.dart';
 
 List<BookCard> readList = [
   BookCard(
-      book: Book(
-          Nome: "Tartarugas até lá embaixo",
-          Autor: "John Green",
-          Sinopse:
-              "A história acompanha a jornada de Aza Holmes, uma menina de 16 anos que sai em busca de um bilionário misteriosamente desaparecido – quem encontrá-lo receberá uma polpuda recompensa em dinheiro – enquanto tenta lidar com o próprio transtorno obsessivo-compulsivo (TOC).",
-          Cor01: Colors.orange,
-          Cor02: Colors.orange,
-          Paginas: 230,
-          PaginasLidas: 0,
-          Icon: Icons.business)),
+    book: Book(
+        Nome: "Tartarugas até lá embaixo",
+        Autor: "John Green",
+        Sinopse:
+            "A história acompanha a jornada de Aza Holmes, uma menina de 16 anos que sai em busca de um bilionário misteriosamente desaparecido – quem encontrá-lo receberá uma polpuda recompensa em dinheiro – enquanto tenta lidar com o próprio transtorno obsessivo-compulsivo (TOC).",
+        Cor01: Colors.orange,
+        Cor02: Colors.orange,
+        Paginas: 230,
+        PaginasLidas: 0,
+        Icon: Icons.business,
+        Frases: [
+          Anotacao(
+              anotacao:
+                  "Aleaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalele",
+              pagina: 5),
+          Anotacao(anotacao: "Alelele", pagina: 5),
+          Anotacao(anotacao: "Alelele", pagina: 5),
+          Anotacao(anotacao: "Alelele", pagina: 5),
+          Anotacao(anotacao: "Alelele", pagina: 5),
+          Anotacao(anotacao: "Alelele", pagina: 5),
+          Anotacao(anotacao: "Alelele", pagina: 5),
+          Anotacao(anotacao: "Alelele", pagina: 5),
+          Anotacao(anotacao: "Alelele", pagina: 5)
+        ],
+        Anotacoes: [
+          Anotacao(
+              anotacao:
+                  "Alaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalele",
+              pagina: 5),
+          Anotacao(anotacao: "Alelele", pagina: 5),
+          Anotacao(anotacao: "Alelele", pagina: 5),
+          Anotacao(anotacao: "Alelele", pagina: 5),
+          Anotacao(anotacao: "Alelele", pagina: 5),
+          Anotacao(anotacao: "Alelele", pagina: 5),
+          Anotacao(anotacao: "Alelele", pagina: 5),
+          Anotacao(anotacao: "Alelele", pagina: 5),
+          Anotacao(anotacao: "Alelele", pagina: 5)
+        ]),
+  ),
   BookCard(
       book: Book(
           Nome: "Harry Potter e o prisioneiro de Azkaban",
