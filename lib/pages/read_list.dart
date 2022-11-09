@@ -1,4 +1,5 @@
 import 'package:butterfly_project/data/exemple_books.dart';
+import 'package:butterfly_project/widget/add_book_button.dart';
 import 'package:butterfly_project/widget/generic_appbar.dart';
 import 'package:butterfly_project/widget/generic_body.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,8 @@ class _ReadListState extends State<ReadList> {
         ),
       ),
       body: GenericBody(items: readList),
+
+      floatingActionButton: AddBookButton()
     );
   }
 }
