@@ -1,3 +1,4 @@
+import 'package:butterfly_project/pages/add_book.dart';
 import 'package:butterfly_project/pages/all.dart';
 import 'package:butterfly_project/pages/favorites.dart';
 import 'package:butterfly_project/pages/initial_page.dart';
@@ -20,6 +21,7 @@ void main() {
         '/paused': (context) => const Paused(),
         '/all': (context) => const All(),
         '/favorites': (context) => const Favorites(),
+        '/add_book': (context) => const AddBook(),
       }
   ));
 }

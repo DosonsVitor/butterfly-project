@@ -1,8 +1,12 @@
-import 'package:butterfly_project/data/exemple_books.dart';
+import 'package:butterfly_project/data/book_dao.dart';
+import 'package:butterfly_project/domain/new_book.dart';
 import 'package:flutter/material.dart';
 
+import '../widget/book_card.dart';
 import '../widget/generic_appbar.dart';
 import '../widget/generic_body.dart';
+
+List<BookCard> allBookCards = [];
 
 class All extends StatefulWidget {
   const All({super.key});
@@ -14,6 +18,7 @@ class All extends StatefulWidget {
 class _AllState extends State<All> {
   @override
   Widget build(BuildContext context) {
+    getAllBooks();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(80),
@@ -32,8 +37,19 @@ class _AllState extends State<All> {
           ],
         ),
       ),
-      body: GenericBody(items: all),
+      body: GenericBody(items: allBookCards),
     );
-    ;
+  }
+
+  getAllBooks() async {
+    List<Book> allBooks = await BookDao().getAllBooks();
+
+    allBookCards.clear();
+    setState((){
+      for (Book book in allBooks) {
+        allBookCards.add(BookCard(book: book));
+      }
+    });
   }
 }
+
