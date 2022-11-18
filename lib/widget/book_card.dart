@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../domain/book.dart';
+import '../domain/new_book.dart';
 import '../pages/book_details.dart';
+import '../style/colors.dart';
 
 class BookCard extends StatefulWidget {
   final Book book;
@@ -37,7 +38,7 @@ class _BookCardState extends State<BookCard> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
                       gradient: LinearGradient(
-                        colors: [widget.book.Cor01, widget.book.Cor02],
+                        colors: [primaryColor, secondaryColor],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       )),
@@ -49,7 +50,7 @@ class _BookCardState extends State<BookCard> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(widget.book.Icon, color: Colors.white),
+                            const Icon(Icons.book, color: Colors.white),
                             const Icon(Icons.more_vert, color: Colors.white)
                           ],
                         ),

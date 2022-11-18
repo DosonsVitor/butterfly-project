@@ -1,8 +1,9 @@
 import 'dart:math';
 
+import 'package:butterfly_project/style/colors.dart';
 import 'package:flutter/material.dart';
 
-import '../domain/book.dart';
+import '../domain/new_book.dart';
 
 var bookIcon = Icons.ac_unit_outlined;
 
@@ -72,15 +73,15 @@ class _BookDetailsState extends State<BookDetails> {
                 size: 30,
               ))
         ],
-        leading: Icon(
-          widget.book.Icon,
+        leading: const Icon(
+          Icons.book,
           color: Colors.white,
           size: 50,
         ),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient:
-                LinearGradient(colors: [widget.book.Cor01, widget.book.Cor02]),
+                LinearGradient(colors: [primaryColor, secondaryColor]),
           ),
         ),
       ),
@@ -103,7 +104,7 @@ class _BookDetailsState extends State<BookDetails> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: widget.book.Cor01,
+        selectedItemColor: primaryColor,
         onTap: _onItemTapped,
       ),
     );

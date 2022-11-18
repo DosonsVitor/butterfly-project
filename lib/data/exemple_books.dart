@@ -1,3 +1,4 @@
+/*
 import 'package:butterfly_project/domain/book.dart';
 import 'package:butterfly_project/domain/anotacao.dart';
 import 'package:butterfly_project/pages/book_details.dart';
@@ -143,3 +144,5 @@ List<BookCard> all = [
   paused[0],
   paused[1]
 ];
+
+*/

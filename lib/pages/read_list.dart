@@ -1,10 +1,13 @@
-import 'package:butterfly_project/data/exemple_books.dart';
 import 'package:butterfly_project/widget/add_book_button.dart';
 import 'package:butterfly_project/widget/generic_appbar.dart';
 import 'package:butterfly_project/widget/generic_body.dart';
 import 'package:flutter/material.dart';
 
-import '../data/example_books2.dart';
+import '../data/book_dao.dart';
+import '../domain/new_book.dart';
+import '../widget/book_card.dart';
+
+List<BookCard> readListBookCards = [];
 
 class ReadList extends StatefulWidget {
   const ReadList({super.key});
@@ -14,8 +17,12 @@ class ReadList extends StatefulWidget {
 }
 
 class _ReadListState extends State<ReadList> {
+
+
   @override
   Widget build(BuildContext context) {
+    getReadListBooks();
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(80),
@@ -34,9 +41,21 @@ class _ReadListState extends State<ReadList> {
           ],
         ),
       ),
-      body: GenericBody(items: getBookForStatus(1)),
+      body: GenericBody(items: readListBookCards),
 
       floatingActionButton: AddBookButton()
     );
   }
+
+  getReadListBooks() async {
+    List<Book> readListBooks = await BookDao().getBooksByStatus(status_id: 1);
+
+    readListBookCards.clear();
+    setState((){
+      for (Book book in readListBooks) {
+        readListBookCards.add(BookCard(book: book));
+      }
+    });
+  }
 }
+
