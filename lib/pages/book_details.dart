@@ -1,34 +1,13 @@
-import 'dart:math';
-
-import 'package:butterfly_project/style/colors.dart';
+import 'package:butterfly_project/widget/change_status_buttons.dart';
 import 'package:flutter/material.dart';
 
-import '../domain/new_book.dart';
-
-var bookIcon = Icons.ac_unit_outlined;
-
-List<TextButton> allChangeStatusButton = [
-  TextButton(
-      onPressed: (){},
-      child: Text("Mudar para lista de leitura")
-  ),
-  TextButton(
-      onPressed: (){},
-      child: Text("Mudar para lendo")
-  ),
-  TextButton(
-      onPressed: (){},
-      child: Text("Mudar para pausado")
-  ),
-  TextButton(
-      onPressed: (){},
-      child: Text("Mudar para lido")
-  ),
-];
+import '../data/note_dao.dart';
+import '../domain/book.dart';
+import '../domain/note.dart';
+import 'add_note.dart';
 
 class BookDetails extends StatefulWidget {
   final Book book;
-  List<TextButton> actualChangeStatusButtons = [];
 
   BookDetails({Key? key, required this.book}) : super(key: key);
 
@@ -39,6 +18,9 @@ class BookDetails extends StatefulWidget {
 class _BookDetailsState extends State<BookDetails> {
   int _selectedIndex = 0;
 
+  List<Note> Quotes = [];
+  List<Note> Notes = [];
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -47,19 +29,15 @@ class _BookDetailsState extends State<BookDetails> {
 
   @override
   Widget build(BuildContext context) {
+
     final List<Widget> _widgetOptions = <Widget>[
       informacoes(widget),
-      frases(widget),
-      anotacoes(widget)
+      frases(),
+      anotacoes()
     ];
 
-    widget.actualChangeStatusButtons = showChangeStatusButtons(widget.book.Status);
-    widget.actualChangeStatusButtons.add(
-        TextButton(
-            onPressed: (){},
-            child: Text("Deletar", style: TextStyle(color: Colors.redAccent),)
-        )
-    );
+    getNotes();
+    getQuotes();
 
     return Scaffold(
       appBar: AppBar(
@@ -73,15 +51,19 @@ class _BookDetailsState extends State<BookDetails> {
                 size: 30,
               ))
         ],
-        leading: const Icon(
-          Icons.book,
-          color: Colors.white,
-          size: 50,
+        leading: Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: NetworkImage(widget.book.IconeURL)
+              )
+          ),
         ),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient:
-                LinearGradient(colors: [primaryColor, secondaryColor]),
+                LinearGradient(colors: [Color(int.parse("0xFF" + widget.book.Cor1)), Color(int.parse("0xFF" + widget.book.Cor2))]),
           ),
         ),
       ),
@@ -104,90 +86,181 @@ class _BookDetailsState extends State<BookDetails> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: primaryColor,
+        selectedItemColor: Color(int.parse("0xFF" + widget.book.Cor1)),
         onTap: _onItemTapped,
       ),
     );
   }
+
+  frases() {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Frases",
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.normal,
+            fontFamily: 'Exo',
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        automaticallyImplyLeading: false,
+        flexibleSpace: Container(decoration: BoxDecoration(gradient: LinearGradient(colors: [Color(int.parse("0xff${widget.book.Cor1}")), Color(int.parse("0xff${widget.book.Cor2}"))]))),
+      ),
+      body: ListView.builder(
+        itemCount: Quotes.length,
+        itemBuilder: (BuildContext context, int index) {
+          return quoteCard(Quotes[index].Anotacao, Quotes[index].Pagina, Color(int.parse("0xFF${widget.book.Cor1}")));
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return AddNote(
+                book: widget.book, TypeId: 1,
+              );
+            },
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        child: Container(
+          width: 200,
+          height: 200,
+          decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(colors: [Color(int.parse("0xff${widget.book.Cor1}")), Color(int.parse("0xff${widget.book.Cor2}"))])
+          ),
+          child: const Icon(Icons.add),
+        ),
+      ),
+    );
+  }
+
+
+  anotacoes() {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Anotações",
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.normal,
+            fontFamily: 'Exo',
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        automaticallyImplyLeading: false,
+        flexibleSpace: Container(decoration: BoxDecoration(gradient: LinearGradient(colors: [Color(int.parse("0xff${widget.book.Cor1}")), Color(int.parse("0xff${widget.book.Cor2}"))]))),
+      ),
+      body: ListView.builder(
+        itemCount: Notes.length,
+        itemBuilder: (BuildContext context, int index) {
+          return noteCard(Notes[index].Anotacao, Notes[index].Pagina, Color(int.parse("0xFF${widget.book.Cor1}")));
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return AddNote(
+                book: widget.book, TypeId: 2,
+              );
+            },
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        child: Container(
+          width: 200,
+          height: 200,
+          decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(colors: [Color(int.parse("0xff${widget.book.Cor1}")), Color(int.parse("0xff${widget.book.Cor2}"))])
+          ),
+          child: const Icon(Icons.add),
+        ),
+      ),
+    );
+  }
+
+  getQuotes() async {
+    List<Note> quotes = await NoteDao().getNoteByBook(book_id: widget.book.Id);
+
+    Quotes.clear();
+    setState(() {
+      for (Note note in quotes) {
+        if (note.Tipo == 1) {
+          Quotes.add(note);
+        }
+      }
+    });
+  }
+
+  getNotes() async {
+    List<Note> notes = await NoteDao().getNoteByBook(book_id: widget.book.Id);
+
+    Notes.clear();
+    setState(() {
+      for (Note note in notes) {
+        if (note.Tipo == 2) {
+          Notes.add(note);
+        }
+      }
+    });
+  }
 }
 
 informacoes(widget) {
-  return SingleChildScrollView(
-    child: Column(
-      children: [
-        Container(
-            width: 500,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [widget.book.Cor01, widget.book.Cor02])),
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 20),
-                  Text(
-                    widget.book.Nome,
-                    style: const TextStyle(
-                        fontSize: 25, color: Colors.white, fontFamily: 'Exo'),
-                  ),
-                  Text(
-                    widget.book.Autor,
-                    style:
-                        const TextStyle(color: Colors.white, fontFamily: 'Exo'),
-                  ),
-                ],
-              ),
-            )),
-        const SizedBox(
-          height: 20,
-        ),
-        infoCard("Sinopse:", widget.book.Sinopse, widget.book.Cor01),
-        const SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            infoCard("Paginas:", widget.book.Paginas, widget.book.Cor01),
-            infoCard(
-                "Paginas lidas:", widget.book.PaginasLidas, widget.book.Cor01)
-          ],
-        ),
+  return ListView(
+    children: [
+      Container(
+          width: 500,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [Color(int.parse("0xFF" + widget.book.Cor1)), Color(int.parse("0xFF" + widget.book.Cor2))])),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                Text(
+                  widget.book.Nome,
+                  style: const TextStyle(
+                      fontSize: 25, color: Colors.white, fontFamily: 'Exo'),
+                ),
+                Text(
+                  widget.book.Autor,
+                  style:
+                      const TextStyle(color: Colors.white, fontFamily: 'Exo'),
+                ),
+              ],
+            ),
+          )),
+      const SizedBox(
+        height: 20,
+      ),
+      infoCard("Sinopse:", widget.book.Sinopse, Color(int.parse("0xFF" + widget.book.Cor1))),
+      const SizedBox(height: 20),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          infoCard("Paginas:", widget.book.Paginas, Color(int.parse("0xFF" + widget.book.Cor1))),
+          infoCard(
+              "Paginas lidas:", widget.book.PaginasLidas, Color(int.parse("0xFF" + widget.book.Cor1)))
+        ],
+      ),
 
-        GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, childAspectRatio: 3),
-          shrinkWrap: true,
-          itemCount: 4,
-          itemBuilder: (BuildContext context, int index) {
-            return widget.actualChangeStatusButtons[index];
-          },
-        ),
 
-      ],
-    ),
-  );
-}
+      ChangeStatusButtons(book: widget.book)
 
-anotacoes(widget) {
-  return GridView.builder(
-    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2, childAspectRatio: 0.8),
-    shrinkWrap: true,
-    itemCount: widget.book.Anotacoes.length,
-    itemBuilder: (BuildContext context, int index) {
-      return noteCard(widget.book.Anotacoes[index].anotacao,
-          widget.book.Anotacoes[index].pagina, widget.book.Cor01);
-    },
-  );
-}
-
-frases(widget) {
-  return ListView.builder(
-    itemCount: widget.book.Frases.length,
-    itemBuilder: (BuildContext context, int index) {
-      return quoteCard(widget.book.Frases[index].anotacao,
-          widget.book.Frases[index].pagina, widget.book.Cor01);
-    },
+    ],
   );
 }
 
@@ -240,9 +313,8 @@ quoteCard(anotacao, pagina, cor) {
 }
 
 noteCard(String anotacao, pagina, cor) {
-  if (anotacao.length > 199) {
-    anotacao = "${anotacao.substring(0, 190)}...";
-  }
+  if (anotacao.length > 199) {anotacao = "${anotacao.substring(0, 190)}...";}
+
   return Padding(
       padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
       child: Card(
@@ -255,23 +327,9 @@ noteCard(String anotacao, pagina, cor) {
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(anotacao,
-                      style: TextStyle(
-                          color: cor, fontFamily: 'Exo', fontSize: 15)),
-                  Text(pagina.toString(),
-                      style: TextStyle(
-                          color: cor, fontFamily: 'Exo', fontSize: 15))
+                  Text(anotacao, style: TextStyle(color: cor, fontFamily: 'Exo', fontSize: 15)),
+                  Text(pagina.toString(), style: TextStyle(color: cor, fontFamily: 'Exo', fontSize: 15))
                 ])),
       ));
 }
 
-showChangeStatusButtons (statusActual){
-  List<TextButton> showButtons = [];
-  for(int i = 0; i < 4; i++ ){
-    if(statusActual != i+1){
-      showButtons.add(allChangeStatusButton[i]);
-    }
-  }
-
-  return showButtons;
-}
