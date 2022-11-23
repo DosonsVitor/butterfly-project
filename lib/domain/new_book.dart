@@ -9,6 +9,8 @@ class Book {
   late final int Paginas;
   late final int PaginasLidas;
   late final int Status;
+  late final Color Cor01;
+  late final Color Cor02;
 
   Book({
     required this.Nome,
@@ -16,7 +18,9 @@ class Book {
     this.Sinopse = "",
     required this.Paginas,
     required this.PaginasLidas,
-    this.Status = 1
+    this.Status = 1,
+    this.Cor01 = Colors.black,
+    this.Cor02 = Colors.black,
   });
 
   Book.fromJson(Map<String, dynamic> json) {

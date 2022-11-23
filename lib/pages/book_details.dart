@@ -117,9 +117,9 @@ informacoes(widget) {
       children: [
         Container(
             width: 500,
-            decoration: BoxDecoration(
+            /*decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [widget.book.Cor01, widget.book.Cor02])),
+                    colors: [widget.book.Cor01, widget.book.Cor02])),*/
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
