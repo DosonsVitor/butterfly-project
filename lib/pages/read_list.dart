@@ -4,7 +4,7 @@ import 'package:butterfly_project/widget/generic_body.dart';
 import 'package:flutter/material.dart';
 
 import '../data/book_dao.dart';
-import '../domain/new_book.dart';
+import '../domain/book.dart';
 import '../widget/book_card.dart';
 
 List<BookCard> readListBookCards = [];

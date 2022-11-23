@@ -1,5 +1,5 @@
 import 'package:butterfly_project/data/db_helper.dart';
-import 'package:butterfly_project/domain/new_book.dart';
+import 'package:butterfly_project/domain/book.dart';
 import 'package:sqflite/sqflite.dart';
 
 class BookDao {
