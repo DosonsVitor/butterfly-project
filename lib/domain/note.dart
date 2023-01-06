@@ -2,7 +2,7 @@ class Note {
   late final String Id;
   late final String Anotacao;
   late final int Pagina;
-  late final int LivroId;
+  late final String LivroId;
   late final int Tipo;
 
   Note({

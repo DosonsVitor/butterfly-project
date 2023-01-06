@@ -1,5 +1,4 @@
 import 'package:butterfly_project/data/note_dao.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uuid/uuid.dart';
@@ -9,9 +8,9 @@ import '../domain/note.dart';
 
 class AddNote extends StatefulWidget {
   final Book book;
-  final int TypeId;
+  final int typeId;
 
-  AddNote({Key? key, required this.book, required this.TypeId}) : super(key: key);
+  const AddNote({Key? key, required this.book, required this.typeId}) : super(key: key);
 
   @override
   State<AddNote> createState() => _AddNoteState();
@@ -22,53 +21,57 @@ class _AddNoteState extends State<AddNote>{
   TextEditingController noteController = TextEditingController();
   TextEditingController pageController = TextEditingController();
 
-  List<String> tipo = ["Frase", "Anotação"];
+  List<String> tipos = ["", "Frase", "Anotação"];
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Adicionar ${tipo[widget.TypeId-1]}",
-          style: const TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.normal,
-            fontFamily: 'Exo',
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
-            onPressed: () { Navigator.pop(context); }),
-        flexibleSpace: Container(decoration: BoxDecoration(gradient: LinearGradient(colors: [Color(int.parse("0xff${widget.book.Cor1}")), Color(int.parse("0xff${widget.book.Cor2}"))]))),
-      ),
+      appBar: buildAppBar(),
       body: buildBody(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () { addNote();},
-        backgroundColor: Colors.transparent,
-        child: Container(
-          width: 200,
-          height: 200,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(colors: [Color(int.parse("0xff${widget.book.Cor1}")), Color(int.parse("0xff${widget.book.Cor2}"))])
-          ),
-          child: const Icon(Icons.check),
+      floatingActionButton: buildConfirmButton(),
+    );
+  }
+
+  buildAppBar() {
+    Color cor1 = Color(int.parse("0xff${widget.book.Cor1}"));
+    Color cor2 = Color(int.parse("0xff${widget.book.Cor2}"));
+    String tipo = tipos[widget.typeId];
+
+    return AppBar(
+      title: Text(
+        "Adicionar $tipo",
+        style: const TextStyle(
+          fontSize: 25,
+          fontWeight: FontWeight.normal,
+          fontFamily: 'Exo',
         ),
       ),
+      centerTitle: true,
+      backgroundColor: Colors.transparent,
+      elevation: 0.0,
+      leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
+          onPressed: () { Navigator.pop(context); }),
+      flexibleSpace: Container(decoration: BoxDecoration(gradient: LinearGradient(colors: [cor1 , cor2]))),
     );
   }
 
   buildBody() {
+    Color cor1 = Color(int.parse("0xff${widget.book.Cor1}"));
+    Color cor2 = Color(int.parse("0xff${widget.book.Cor2}"));
+    String tipo = tipos[widget.typeId];
+
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+
+      padding: const EdgeInsets.all(20.0),
+
       child: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
+
             children: [
               TextFormField(
                   validator: (value) {
@@ -78,23 +81,26 @@ class _AddNoteState extends State<AddNote>{
                     return null;
                   },
                   controller: noteController,
-                  cursorColor: Color(int.parse("0xff${widget.book.Cor1}")),
+                  cursorColor: cor1,
                   decoration: InputDecoration(
-                    labelText: "Adicionar ${tipo[widget.TypeId-1]}",
-                    labelStyle: TextStyle(color: Color(int.parse("0xff${widget.book.Cor1}"))),
-                    focusColor: Color(int.parse("0xff${widget.book.Cor1}")),
+                    labelText: "Adicionar $tipo",
+                    labelStyle: TextStyle(color: cor1),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: cor1), borderRadius: BorderRadius.circular(50)
+                    ),
+                    focusColor: cor1,
                     focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(int.parse("0xff${widget.book.Cor1}"))),
-                        borderRadius: BorderRadius.circular(50)
+                        borderSide: BorderSide(color: cor2), borderRadius: BorderRadius.circular(50)
                     ),
                     border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(int.parse("0xff${widget.book.Cor1}"))),
-                        borderRadius: BorderRadius.circular(50)
+                        borderSide: BorderSide(color: cor1), borderRadius: BorderRadius.circular(50)
                     ),
-                    icon: Icon(Icons.edit_note, color: Color(int.parse("0xff${widget.book.Cor1}"))),
+                    icon: Icon(Icons.edit_note, color: cor1),
                   )
               ),
+
               const SizedBox(height: 16),
+
               TextFormField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -103,20 +109,21 @@ class _AddNoteState extends State<AddNote>{
                     return null;
                   },
                   controller: pageController,
-                  cursorColor: Color(int.parse("0xff${widget.book.Cor1}")),
+                  cursorColor: cor1,
                   decoration: InputDecoration(
                     labelText: "Pagina",
-                    labelStyle: TextStyle(color: Color(int.parse("0xff${widget.book.Cor1}"))),
-                    focusColor: Color(int.parse("0xff${widget.book.Cor1}")),
+                    labelStyle: TextStyle(color: cor1),
+                    focusColor: cor1,
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: cor1), borderRadius: BorderRadius.circular(50)
+                    ),
                     focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(int.parse("0xff${widget.book.Cor1}"))),
-                        borderRadius: BorderRadius.circular(50)
+                        borderSide: BorderSide(color: cor2), borderRadius: BorderRadius.circular(50)
                     ),
                     border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(int.parse("0xff${widget.book.Cor1}"))),
-                        borderRadius: BorderRadius.circular(50)
+                        borderSide: BorderSide(color: cor1), borderRadius: BorderRadius.circular(50)
                     ),
-                    icon: Icon(Icons.collections_bookmark, color: Color(int.parse("0xff${widget.book.Cor1}"))),
+                    icon: Icon(Icons.collections_bookmark, color: cor1),
                   ),
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
@@ -130,15 +137,38 @@ class _AddNoteState extends State<AddNote>{
     );
   }
 
+  buildConfirmButton(){
+    Color cor1 = Color(int.parse("0xff${widget.book.Cor1}"));
+    Color cor2 = Color(int.parse("0xff${widget.book.Cor2}"));
+
+    return FloatingActionButton(
+      onPressed: () { addNote();},
+      backgroundColor: Colors.transparent,
+      child: Container(
+        width: 200,
+        height: 200,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: LinearGradient(colors: [cor1, cor2])
+        ),
+        child: const Icon(Icons.check),
+      ),
+    );
+  }
+
   addNote() async{
+    String tipo = tipos[widget.typeId];
+
     if(_formKey.currentState!.validate()){
       String newNotation = noteController.text;
       int newPage = int.parse(pageController.text);
 
-      Note newNote = Note(Id: UuidGenerate(), Anotacao: newNotation, Pagina: newPage, LivroId: widget.book.Id, Tipo: widget.TypeId);
+      Note newNote = Note(Id: UuidGenerate(), Anotacao: newNotation, Pagina: newPage, LivroId: widget.book.Id, Tipo: widget.typeId);
       await NoteDao().addNote(note: newNote);
-      showSnackBar("${tipo[widget.TypeId-1]} Adicionada com sucesso!");
+
+      showSnackBar("$tipo Adicionada com sucesso!");
       Navigator.pop(context);
+
     } else {showSnackBar("Adicione todos os dados!");}
   }
 

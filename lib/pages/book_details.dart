@@ -121,7 +121,7 @@ class _BookDetailsState extends State<BookDetails> {
           MaterialPageRoute(
             builder: (context) {
               return AddNote(
-                book: widget.book, TypeId: 1,
+                book: widget.book, typeId: 1,
               );
             },
           ),
@@ -170,7 +170,7 @@ class _BookDetailsState extends State<BookDetails> {
           MaterialPageRoute(
             builder: (context) {
               return AddNote(
-                book: widget.book, TypeId: 2,
+                book: widget.book, typeId: 2,
               );
             },
           ),

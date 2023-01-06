@@ -1,10 +1,8 @@
 class Book {
-  late final int Id;
+  late final String Id;
   late final String Nome;
   late final String Autor;
-  late final String Genero;
   late final String Sinopse;
-  late final String MotivacaoLeitura;
   late final int Paginas;
   late final int PaginasLidas;
   late final int Status;
@@ -16,7 +14,6 @@ class Book {
     required this.Id,
     required this.Nome,
     required this.Autor,
-    this.Genero = "Indefinido",
     this.Sinopse = "",
     required this.Paginas,
     required this.PaginasLidas,

@@ -12,7 +12,7 @@ class NoteDao {
     await db.insert('NOTE', note.toJson());
   }
 
-  Future<List<Note>> getNoteByBook({required int book_id}) async {
+  Future<List<Note>> getNoteByBook({required String book_id}) async {
     DBHelper dbHelper = DBHelper();
     Database db = await dbHelper.initDB();
 
