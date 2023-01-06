@@ -1,5 +1,5 @@
 import 'package:butterfly_project/data/db_helper.dart';
-import 'package:butterfly_project/domain/new_book.dart';
+import 'package:butterfly_project/domain/book.dart';
 import 'package:sqflite/sqflite.dart';
 
 class BookDao {
@@ -43,7 +43,7 @@ class BookDao {
     return listBooks;
   }
 
-  changeStatus({required int book_id, required int status_id}) async {
+  changeStatus({required String book_id, required int status_id}) async {
     DBHelper dbHelper = DBHelper();
     Database db = await dbHelper.initDB();
 
@@ -52,7 +52,7 @@ class BookDao {
     await db.rawQuery(sql, [status_id, book_id]);
   }
 
-  deleteBook({required int book_id}) async {
+  deleteBook({required String book_id}) async {
     DBHelper dbHelper = DBHelper();
     Database db = await dbHelper.initDB();
 

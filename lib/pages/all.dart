@@ -1,5 +1,5 @@
 import 'package:butterfly_project/data/book_dao.dart';
-import 'package:butterfly_project/domain/new_book.dart';
+import 'package:butterfly_project/domain/book.dart';
 import 'package:flutter/material.dart';
 
 import '../widget/book_card.dart';

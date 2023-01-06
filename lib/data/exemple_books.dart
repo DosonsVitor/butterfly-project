@@ -1,6 +1,6 @@
 /*
 import 'package:butterfly_project/domain/book.dart';
-import 'package:butterfly_project/domain/anotacao.dart';
+import 'package:butterfly_project/domain/note.dart';
 import 'package:butterfly_project/pages/book_details.dart';
 import 'package:butterfly_project/widget/book_card.dart';
 import 'package:flutter/material.dart';
