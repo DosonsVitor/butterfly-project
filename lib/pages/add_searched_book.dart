@@ -1,25 +1,28 @@
-import 'package:butterfly_project/data/book_dao.dart';
-import 'package:butterfly_project/widget/generic_body.dart';
+import 'package:flutter/services.dart';
+import 'package:uuid/uuid.dart';
+import 'package:books_finder/books_finder.dart';
+import 'package:butterfly_project/widget/input.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:multi_select_flutter/dialog/mult_select_dialog.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
-import 'package:uuid/uuid.dart';
 
-import '../domain/book.dart';
+import '../domain/book.dart' as local;
+import '../data/book_dao.dart';
 import '../widget/choice_button.dart';
 import '../widget/generic_appbar.dart';
+import '../widget/generic_body.dart';
 
-class AddBook extends StatefulWidget {
-  const AddBook({super.key});
+class AddSearchedBook extends StatefulWidget {
+  const AddSearchedBook({super.key, required this.book});
+  final BookInfo book;
 
   @override
-  State<AddBook> createState() => _AddBookState();
+  State<AddSearchedBook> createState() => _AddSearchedBookState();
 }
 
-class _AddBookState extends State<AddBook> {
+class _AddSearchedBookState extends State<AddSearchedBook> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController titleController = TextEditingController();
   TextEditingController autorController = TextEditingController();
@@ -33,6 +36,15 @@ class _AddBookState extends State<AddBook> {
 
   Color pickerColor = const Color(0xff443a49);
   Color currentColor = const Color(0xff443a49);
+
+  @override
+  void initState(){
+    titleController.text = widget.book.title;
+    autorController.text = widget.book.authors[0];
+    sinopseController.text = widget.book.description;
+    pagesController.text = widget.book.pageCount.toString();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +62,15 @@ class _AddBookState extends State<AddBook> {
         ),
       ),
       body: GenericBody(items: [
-        createTextInput(Icons.title_outlined, "Titulo", titleController, null),
-        createTextInput(Icons.auto_stories_rounded, "Autor", autorController, null),
-        createTextInput(Icons.abc, "Sinopse", sinopseController, null),
-        createNumberInput(Icons.library_books, "Paginas", pagesController, null),
-        createNumberInput(Icons.library_books, "Paginas Lidas", pagesReadController, null),
+        createTextInput(Icons.title_outlined, "Titulo", titleController),
+        createTextInput(Icons.auto_stories_rounded, "Autor", autorController),
+        createTextInput(Icons.abc, "Sinopse", sinopseController),
+        createNumberInput(Icons.library_books, "Paginas", pagesController),
+        createNumberInput(Icons.library_books, "Paginas Lidas", pagesReadController, ),
         ChoiceButton(name: "Status", tap: () => _showMultiSelect(context, List.from(["Lista de Leitura", "Lendo", "Pausado", "Lido"]))),
         ChoiceButton(name: "Cor Primaria", tap: () => showColorPicker(context, color1Controller)),
         ChoiceButton(name: "Cor Segundaria", tap: () => showColorPicker(context, color2Controller)),
-        createTextInput(Icons.library_books, "Link do icone", iconUrlController, null),
+        createTextInput(Icons.library_books, "Link do icone", iconUrlController, ),
       ],),
 
       floatingActionButton: FloatingActionButton(
@@ -143,18 +155,18 @@ class _AddBookState extends State<AddBook> {
     String newBookCor2 = color2Controller.text;
     String newBookIcon = iconUrlController.text;
 
-    Book newBook = Book(Id: UuidGenerate(), Nome: newBookTitle, Autor: newBookAutor, Paginas: newBookPages, PaginasLidas: newBookPagesRead, Sinopse: newBookSinopse, Cor1: newBookCor1, Cor2: newBookCor2, IconeURL: newBookIcon);
+    local.Book newBook = local.Book(Id: UuidGenerate(), Nome: newBookTitle, Autor: newBookAutor, Paginas: newBookPages, PaginasLidas: newBookPagesRead, Sinopse: newBookSinopse, Cor1: newBookCor1, Cor2: newBookCor2, IconeURL: newBookIcon);
     await BookDao().addBook(book: newBook);
     showSnackBar("Livro Adicionada com sucesso!");
     Navigator.pop(context);
   }
 }
 
-createTextInput(icon, label, controller, value){
+
+createTextInput(icon, label, controller){
   return  Padding(
       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
       child: TextFormField(
-          initialValue: value,
           controller: controller,
           cursorColor: Colors.deepPurple,
           decoration: InputDecoration(
@@ -175,11 +187,10 @@ createTextInput(icon, label, controller, value){
   );
 }
 
-createNumberInput(icon, label, controller, value){
+createNumberInput(icon, label, controller){
   return Padding(
     padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
     child: TextFormField(
-      initialValue: value,
       controller: controller,
       cursorColor: Colors.deepPurple,
       decoration: InputDecoration(
@@ -203,6 +214,7 @@ createNumberInput(icon, label, controller, value){
     ),
   );
 }
+
 
 String UuidGenerate(){
   var uuid = Uuid();
