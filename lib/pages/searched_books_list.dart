@@ -36,18 +36,22 @@ class _SearchedBooksState extends State<SearchedBooks>{
               decoration: const InputDecoration(hintText: "Digite o titulo do livro"),
             ),
             actions: <Widget>[
-              FlatButton(
-                color: Colors.red,
-                textColor: Colors.white,
-                child: const Text('Cancelar'),
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  padding: const EdgeInsets.all(0),
+                ),
+                child: const Text('Cancelar', style: TextStyle(color: Colors.white, fontFamily: 'Exo'),),
                 onPressed: () {
                     Navigator.pop(context);
                 },
               ),
-              FlatButton(
-                color: Colors.purple,
-                textColor: Colors.white,
-                child: const Text('Pesquisar'),
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.purple,
+                  padding: const EdgeInsets.all(0),
+                ),
+                child: const Text('Pesquisar', style: TextStyle(color: Colors.white, fontFamily: 'Exo'),),
                 onPressed: () {
                     getBooks(valueText);
                     Navigator.pop(context);
