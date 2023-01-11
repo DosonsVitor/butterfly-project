@@ -34,7 +34,8 @@ class _InitialPageState extends State<InitialPage> {
             MainButton(name: "Lendo", route: "/reading"),
             MainButton(name: "Pausados", route: "/paused"),
             MainButton(name: "Lidos", route: "/read"),
-            MainButton(name: "Todos", route: "/all")
+            MainButton(name: "Todos", route: "/all"),
+            MainButton(name: "Maps", route: "/maps")
           ],
         ));
   }

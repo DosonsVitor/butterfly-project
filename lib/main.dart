@@ -2,6 +2,7 @@ import 'package:butterfly_project/pages/add_book.dart';
 import 'package:butterfly_project/pages/all.dart';
 import 'package:butterfly_project/pages/favorites.dart';
 import 'package:butterfly_project/pages/initial_page.dart';
+import 'package:butterfly_project/pages/maps.dart';
 import 'package:butterfly_project/pages/paused.dart';
 import 'package:butterfly_project/pages/read.dart';
 import 'package:butterfly_project/pages/read_list.dart';
@@ -23,7 +24,8 @@ void main() {
         '/all': (context) => const All(),
         '/favorites': (context) => const Favorites(),
         '/add_book': (context) => const AddBook(),
-        '/search_book': (context) => const SearchBook()
+        '/search_book': (context) => const SearchBook(),
+        '/maps': (context) => const Maps()
       }
   ));
 }
