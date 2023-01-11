@@ -25,7 +25,7 @@ class _SearchedBooksState extends State<SearchedBooks>{
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('TextField in Dialog'),
+            title: const Text('Buscar livro por titulo'),
             content: TextField(
               onChanged: (value) {
                 setState(() {
@@ -33,21 +33,21 @@ class _SearchedBooksState extends State<SearchedBooks>{
                 });
               },
               controller: _textFieldController,
-              decoration: const InputDecoration(hintText: "Text Field in Dialog"),
+              decoration: const InputDecoration(hintText: "Digite o titulo do livro"),
             ),
             actions: <Widget>[
               FlatButton(
                 color: Colors.red,
                 textColor: Colors.white,
-                child: const Text('CANCEL'),
+                child: const Text('Cancelar'),
                 onPressed: () {
                     Navigator.pop(context);
                 },
               ),
               FlatButton(
-                color: Colors.green,
+                color: Colors.purple,
                 textColor: Colors.white,
-                child: const Text('OK'),
+                child: const Text('Pesquisar'),
                 onPressed: () {
                     getBooks(valueText);
                     Navigator.pop(context);
@@ -71,7 +71,7 @@ class _SearchedBooksState extends State<SearchedBooks>{
                   color: Colors.white),
               onPressed: () {
                 Navigator.pop(context);
-              }), actions: [ IconButton(onPressed: () => _displayTextInputDialog(context), icon: Icon(Icons.search, color: Colors.white,)) ],
+              }), actions: [ IconButton(onPressed: () => _displayTextInputDialog(context), icon: const Icon(Icons.search, color: Colors.white,)) ],
         ),
       ),
       body: GenericBody(items: bookCards),

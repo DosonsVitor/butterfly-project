@@ -1,8 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:uuid/uuid.dart';
 import 'package:books_finder/books_finder.dart';
-import 'package:butterfly_project/widget/input.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:multi_select_flutter/dialog/mult_select_dialog.dart';
